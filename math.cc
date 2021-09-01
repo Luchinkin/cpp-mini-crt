@@ -1,6 +1,5 @@
 #include <cstdint>
 
-
 #define _FOFF  7
 #define _FFRAC  ((unsigned short)((1 << _FOFF) - 1))
 #define _FMASK  ((unsigned short)(0x7fff & ~_FFRAC))
@@ -99,48 +98,11 @@ extern "C" float sqrtf( const float x )
 	return ldexpf( y, n / 2 );
 }
 
-
-//extern "C" float atan2f()
-//{
-//	return 0.f;
-//}
-//
-//extern "C" float sinf( float _X )
-//{
-//	return _mm_cvtss_f32( _mm_sin_ps( _mm_set_ss( _X ) ) );
-//}
-//
-//
-//extern "C" float cosf()
-//{
-//	return 0.f;
-//}
-
-//extern "C" float acosf()
-//{
-//	return 0.f;
-//}
-//extern "C" float atanf()
-//{
-//	return 0.f;
-//}
-
-
-
-
 static float FOPI = 1.27323954473516;
 
 static float PIF = 3.14159265358979323846F;
 static float PIO4F = 0.7853981633974483096;
 static float PIO2F =  1.570796326794896619F;
-
-/* Note, these constants are for a 32-bit significand: */
-/*
-static float DP1 =  0.7853851318359375;
-static float DP2 =  1.30315311253070831298828125e-5;
-static float DP3 =  3.03855025325309630e-11;
-static float lossth = 65536.;
-*/
 
 /* These are for a 24-bit significand: */
 static float DP1 = 0.78515625;

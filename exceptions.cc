@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <exception>
 
-// #undef _HAS_EXCEPTIONS
-// #define _HAS_EXCEPTIONS 0
-
 inline void RAISE_EXCEPTION()
 {
 	__debugbreak();
