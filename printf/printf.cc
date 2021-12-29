@@ -885,6 +885,11 @@ int __stdio_common_vsprintf(
     return _vsnprintf( _out_buffer, _Buffer, _BufferCount, _Format, _ArgList );
 }
 
+int __stdio_common_vsscanf( unsigned __int64 options, const char* input, size_t length, const char* format, void* locale, va_list valist )
+{
+    return _vsnprintf( _out_buffer, (char*)input, length, format, valist );
+}
+
 int fctprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
 {
     va_list va;

@@ -4,9 +4,24 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#define malloc(x) HeapAlloc(GetProcessHeap(), 0, x)
-#define realloc(x,s) HeapReAlloc(GetProcessHeap(), 0, x, s)
-#define free(x)     HeapFree(GetProcessHeap(), 0, x)
+//#define malloc(x) HeapAlloc(GetProcessHeap(), 0, x)
+//#define realloc(x,s) HeapReAlloc(GetProcessHeap(), 0, x, s)
+//#define free(x)     HeapFree(GetProcessHeap(), 0, x)
+
+void* malloc( size_t sizemem )
+{
+	return HeapAlloc( GetProcessHeap(), 0, sizemem );
+}
+
+void* realloc( void* ptr, size_t newsize )
+{
+	return HeapReAlloc( GetProcessHeap(), 0, ptr, newsize );
+}
+
+void free( void* ptr )
+{
+	HeapFree( GetProcessHeap(), 0, ptr );
+}
 
 void* operator new( size_t size )
 {

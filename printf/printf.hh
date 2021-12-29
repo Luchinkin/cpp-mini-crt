@@ -73,7 +73,7 @@ extern "C" {
 		va_list _ArgList
 	);
 
-
+	int __stdio_common_vsscanf( unsigned __int64 options, const char* input, size_t length, const char* format, void* locale, va_list valist );
 #ifdef __cplusplus
 }
 #endif

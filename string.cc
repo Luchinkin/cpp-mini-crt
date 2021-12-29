@@ -175,3 +175,65 @@ extern "C" unsigned int towlower( unsigned int c )
 	return ( c < 0x00ff ? (unsigned int)( tolower( (int)c ) ) : c );
 }
 
+int islower( int c )
+{
+	return (unsigned)c - 'a' < 26;
+}
+
+extern "C" int toupper( int c )
+{
+	if ( islower( c ) ) return c & 0x5f;
+	return c;
+}
+
+#define ALIGN (sizeof(size_t)-1)
+#define UCHAR_MAX 255
+#define ONES ((size_t)-1/UCHAR_MAX)
+#define HIGHS (ONES * (UCHAR_MAX/2+1))
+#define HASZERO(x) ((x)-ONES & ~(x) & HIGHS)
+
+static void* __cdecl
+__memset(
+	void* dest,
+	int ch,
+	size_t count
+)
+{
+	if ( count )
+	{
+		char* d = (char*)dest;
+
+		do
+		{
+			*d++ = ch;
+		} while ( --count );
+	}
+
+	return dest;
+}
+
+char* __stpncpy( char* d, const char* s, size_t n )
+{
+	size_t* wd;
+	const size_t* ws;
+
+	if ( ( (size_t)s & ALIGN ) == ( (size_t)d & ALIGN ) )
+	{
+		for ( ; ( (size_t)s & ALIGN ) && n && ( *d = *s ); n--, s++, d++ );
+		if ( !n || !*s ) goto tail;
+		wd = (size_t*)d; ws = (const size_t*)s;
+		for ( ; n >= sizeof( size_t ) && !HASZERO( *ws );
+			  n -= sizeof( size_t ), ws++, wd++ ) *wd = *ws;
+		d = (char*)wd; s = (const char*)ws;
+	}
+	for ( ; n && ( *d = *s ); n--, s++, d++ );
+tail:
+	__memset( d, 0, n );
+	return d;
+}
+
+extern "C" char* strncpy( char* d, const char* s, size_t n )
+{
+	__stpncpy( d, s, n );
+	return d;
+}

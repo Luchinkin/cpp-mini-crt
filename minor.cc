@@ -157,5 +157,17 @@ extern "C" void __crt_debugger_hook( int reserved )
 {}
 
 
-
+extern "C" void* memchr(
+	const void* buffer,
+	int c,
+	size_t count
+)
+{
+	const char* big = (const char*)buffer;
+	size_t n;
+	for ( n = 0; n < count; n++ )
+		if ( big[ n ] == c )
+			return (void*)&big[ n ];
+	return NULL;
+}
 
