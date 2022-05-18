@@ -1706,7 +1706,7 @@ float __tandf( double x, int odd )
 	return odd ? -1.0 / r : r;
 }
 
-double floor( double x )
+extern "C" double floor(double x)
 {
 	union
 	{
