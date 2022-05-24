@@ -8,6 +8,8 @@
 //#define realloc(x,s) HeapReAlloc(GetProcessHeap(), 0, x, s)
 //#define free(x)     HeapFree(GetProcessHeap(), 0, x)
 
+#ifdef _USE_WIN_HEAP
+
 void* malloc( size_t sizemem )
 {
 	return HeapAlloc( GetProcessHeap(), 0, sizemem );
@@ -22,6 +24,15 @@ void free( void* ptr )
 {
 	HeapFree( GetProcessHeap(), 0, ptr );
 }
+
+#else
+
+
+extern "C" void* malloc( size_t sizemem );
+extern "C" void* realloc( void* ptr, size_t newsize );
+extern "C" void free( void* ptr );
+
+#endif
 
 void* operator new( size_t size )
 {
